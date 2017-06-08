@@ -249,6 +249,15 @@ sed -i "/RestartSec=5/a[Install]\nWantedBy=multi-user.target" /lib/systemd/syste
 sudo systemctl enable dlm.service
 }
 
+# fix: Intel Driver install
+if [ "$lsb" == "Debian" ] || [ "$lsb" == "Kali" ];
+then
+	echo -e "\nPerforming intel display driver fix....\n"
+        apt-get -y install xserver-xorg-video-intel
+        cp -i /usr/share/doc/xserver-xorg-video-intel/xorg.conf /etc/X11/xorg.conf
+fi
+
+
 # uninstall
 uninstall(){
 separator
